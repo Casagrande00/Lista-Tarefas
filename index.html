@@ -1,0 +1,29 @@
+<DOCYTYPE html>
+  <html>
+    <head>
+      <meta charset="UTF-8">
+      <title>Lista de Tarefas</title>
+    </head>
+    <body>
+      <h1>Minhas Tarefas</h1>
+      <input id="taskInput" placeholder="Digite uma Tarefa">
+      <button onclick="addTask()">Adicionar</button>
+
+      <ul id="taskList"></ul>
+
+      <script>
+        function addtask() {
+          const input = document.GetElementById("taskinput");
+          const list = document.GetElementById("tasklist");
+
+          if (input.Value === "") return;
+
+          const li. = document.CreateElement("li");
+          li. textcontent = input.value;
+
+          list.appendchild(li);
+          input.value "";
+        }
+      </script>
+    </body>
+  </html>

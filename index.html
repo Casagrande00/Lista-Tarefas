@@ -3,6 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <title>Lista de Tarefas</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 500px;
+      margin: 40px auto;
+    }
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      margin: 5px 0;
+    }
+
+    button {
+      margin-left: 10px;
+    }
+  </style>
 </head>
 <body>
 
@@ -14,22 +32,67 @@
 <ul id="taskList"></ul>
 
 <script>
-const btn = document.getElementById("addBtn");
-const input = document.getElementById("taskInput");
-const list = document.getElementById("taskList");
+let tasks = [];
 
-btn.addEventListener("click", function () {
+// Carrega do navegador
+function loadTasks() {
+  const data = localStorage.getItem("tasks");
+
+  if (data) {
+    tasks = JSON.parse(data);
+  }
+
+  render();
+}
+
+// Salva no navegador
+function saveTasks() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+// Mostra na tela
+function render() {
+  const list = document.getElementById("taskList");
+  list.innerHTML = "";
+
+  tasks.forEach(function (task, index) {
+
+    const li = document.createElement("li");
+    li.textContent = task;
+
+    const btn = document.createElement("button");
+    btn.textContent = "Apagar";
+
+    btn.onclick = function () {
+      tasks.splice(index, 1);
+      saveTasks();
+      render();
+    };
+
+    li.appendChild(btn);
+    list.appendChild(li);
+  });
+}
+
+// Adicionar
+document.getElementById("addBtn").addEventListener("click", function () {
+
+  const input = document.getElementById("taskInput");
 
   if (input.value === "") return;
 
-  const li = document.createElement("li");
-  li.textContent = input.value;
+  tasks.push(input.value);
 
-  list.appendChild(li);
+  saveTasks();
+  render();
 
   input.value = "";
 });
+
+// Inicializa
+loadTasks();
 </script>
 
 </body>
 </html>
+
